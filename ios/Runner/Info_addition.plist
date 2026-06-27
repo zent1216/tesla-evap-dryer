@@ -1,0 +1,16 @@
+<!-- ios/Runner/Info.plist에 추가할 내용 -->
+<!-- <dict> 안에 아래 항목을 추가하세요 -->
+
+<!--
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>teslapwa</string>
+        </array>
+    </dict>
+</array>
+-->

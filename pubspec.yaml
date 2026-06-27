@@ -1,0 +1,38 @@
+name: tesla_control
+description: Tesla 차량 원격 제어 앱 (에바포레이터 건조 포함)
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # HTTP 통신
+  http: ^1.2.1
+  # OAuth 2.0 PKCE (Tesla 로그인)
+  flutter_web_auth_2: ^3.1.2
+  # 토큰 안전 저장
+  flutter_secure_storage: ^9.2.2
+  # 설정 저장 (리전, Client ID 등)
+  shared_preferences: ^2.3.2
+  # SHA-256 (PKCE code_challenge 생성)
+  crypto: ^3.0.3
+  # 상태 관리
+  provider: ^6.1.2
+  # 아이콘
+  cupertino_icons: ^1.0.8
+  # 포그라운드 서비스 (알림바 진행 표시 + 배터리 최적화 방지)
+  flutter_foreground_task: ^8.13.0
+  # 설정 백업/복원
+  share_plus: ^10.0.0       # 내보내기 — 공유 시트 (카카오, 드라이브 등)
+  file_picker: ^8.1.2       # 가져오기 — 파일 선택
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

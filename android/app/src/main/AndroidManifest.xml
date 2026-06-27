@@ -1,0 +1,88 @@
+<!-- android/app/src/main/AndroidManifest.xml에서 <activity> 안에 추가 -->
+<!-- flutter_web_auth_2 콜백 처리 (Tesla OAuth 리다이렉트) -->
+
+<!--
+  기존 AndroidManifest.xml의 <application> 태그 안에 아래 <activity>를 추가하세요:
+
+  <activity
+      android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
+      android:exported="true">
+      <intent-filter android:label="flutter_web_auth_2">
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <data android:scheme="teslapwa" />
+      </intent-filter>
+  </activity>
+
+  완성된 AndroidManifest.xml 예시는 아래와 같습니다:
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 기본 네트워크 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- 포그라운드 서비스 (에바포레이터 건조 5분 유지) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
+
+    <!-- CPU/화면 꺼져도 타이머 유지 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <!-- 알림바 표시 (Android 13+, 최초 1회 사용자 허용) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <!-- 배터리 최적화 제외 요청 (건조 시작 전 시스템 팝업) -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
+    <application
+        android:label="Tesla 제어 앱"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+
+        <!-- 메인 액티비티 -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- ★ Tesla OAuth 콜백 처리 -->
+        <activity
+            android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
+            android:exported="true">
+            <intent-filter android:label="flutter_web_auth_2">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="teslapwa" />
+            </intent-filter>
+        </activity>
+
+        <!-- ★ flutter_foreground_task 포그라운드 서비스 -->
+        <service
+            android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Tesla evaporator drying — runs for 5 minutes"/>
+        </service>
+
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+</manifest>
