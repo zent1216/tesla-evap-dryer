@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tesla 인증 완료</title>
+<style>
+body{font-family:-apple-system,sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;background:#0a0a0a;color:#fff;text-align:center}
+.card{background:#1c1c1e;border-radius:20px;padding:40px;max-width:400px}
+h2{color:#30d158;margin-bottom:12px}
+p{color:#8e8e93;font-size:14px;line-height:1.6}
+.code{background:#2c2c2e;border-radius:8px;padding:8px 14px;margin:12px 0;font-family:monospace;color:#0a84ff;font-size:13px;word-break:break-all}
+</style>
+<script>
+// URL에서 code 파라미터 추출 → 앱의 커스텀 스킴으로 리다이렉트
+const params = window.location.search;
+if (params) {
+  const appUrl = 'teslapwa://callback' + params;
+  window.location.href = appUrl;
+}
+</script>
+</head>
+<body>
+<div class="card">
+<h2>✅ 인증 완료</h2>
+<p>앱으로 자동 이동합니다.<br>이동하지 않으면 앱을 직접 열어주세요.</p>
+<p style="margin-top:20px;font-size:12px;color:#636366">이 페이지는 Tesla OAuth 콜백 전용입니다.</p>
+</div>
+</body>
+</html>

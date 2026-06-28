@@ -1,18 +1,30 @@
-// Tesla 앱 설정
-// developer.tesla.com 에서 발급받은 Client ID로 교체하세요.
-class TeslaConfig {
-  // ── 여기를 채우세요 ─────────────────────────────────────
-  static const String clientId = 'YOUR_CLIENT_ID_HERE';
-  // ──────────────────────────────────────────────────────
+import 'package:shared_preferences/shared_preferences.dart';
 
-  static const String redirectUri = 'teslapwa://callback';
+class TeslaConfig {
+  static String _clientId = '';
+  static String get clientId => _clientId;
+
+  static Future<void> loadClientId() async {
+    final prefs = await SharedPreferences.getInstance();
+    _clientId = prefs.getString('tesla_client_id') ?? '';
+  }
+
+  static Future<void> saveClientId(String id) async {
+    _clientId = id.trim();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('tesla_client_id', _clientId);
+  }
+
+  static bool get hasClientId => _clientId.isNotEmpty;
+
+  static const String redirectUri = 'https://zent1216.github.io/tesla-evap-dryer/callback';
   static const String authBase =
       'https://fleet-auth.prd.vn.cloud.tesla.com/oauth2/v3';
   static const String scopes =
       'openid offline_access vehicle_device_data vehicle_cmds vehicle_charging_cmds';
 
   static const Map<String, String> regionUrls = {
-    'ap': 'https://fleet-api.prd.ap.vn.cloud.tesla.com', // 한국 포함
+    'ap': 'https://fleet-api.prd.ap.vn.cloud.tesla.com',
     'na': 'https://fleet-api.prd.na.vn.cloud.tesla.com',
     'eu': 'https://fleet-api.prd.eu.vn.cloud.tesla.com',
   };
@@ -23,7 +35,6 @@ class TeslaConfig {
     'eu': '유럽',
   };
 
-  // 에바포레이터 건조 설정
-  static const int evapDryDurationSeconds = 5 * 60; // 5분
-  static const double evapMaxTemp = 28.0; // 최고 설정 온도 (°C)
+  static const int evapDryDurationSeconds = 5 * 60;
+  static const double evapMaxTemp = 28.0;
 }
